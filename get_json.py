@@ -2,6 +2,7 @@ import json
 import pandas as pd
 import numpy as np
 import os 
+import io
 
 
 
@@ -25,14 +26,15 @@ class GetJson:
 
         # }
 
-        self.new_columns = ["sno","istype","stin","idtype","inum","idt","portcd","val","iamt","camt","samt""ostype","odtype","oinum","oidt","oval","oiamt","ocamt","osamt"]
+        self.new_columns = ["istype","stin","idtype","inum","idt","portcd","val","iamt","camt","samt","ostype","odtype","oinum","oidt","oval","oiamt","ocamt","osamt"]
         self.final_df = final_df
         self.metadata = metadata
 
 
     def get_json(self):
+        self.final_df.columns = self.new_columns
         data_records = [
-            {"SNo": i + 1, **{k: v for k, v in row.items() if pd.notna(v)}}
+            {"sno": i + 1, **{k: v for k, v in row.items() if pd.notna(v)}}
             for i, row in enumerate(self.final_df.to_dict(orient='records'))
         ]
 
@@ -40,11 +42,15 @@ class GetJson:
         final_json = self.metadata.copy()
         final_json["stmt01A"] = data_records
 
-        # Optional: save to file
-        with open("files/output.json", "w") as f:
-            json.dump(final_json, f, indent=4)
+        return final_json
 
-        if os.path.exists('files/output.json'):
-            return True
-        else:
-            return False
+        
+    def get_json_file(self):
+        final_json = self.get_json()  # use the above method
+
+        # Create in-memory file-like object
+        json_str = json.dumps(final_json, indent=4)
+        json_bytes = io.BytesIO(json_str.encode("utf-8"))
+        json_bytes.name = "output.json"
+
+        return json_bytes

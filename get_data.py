@@ -109,7 +109,7 @@ class GetSales:
     
     
 class GetPurchase:
-    def __init__(self):
+    def __init__(self,metadata):
         self.cols_mapping_b2b:dict = {
             'Type of Inward Supply':'Type of Inward Supply',
             'GSTIN of Supplier/Self GSTIN':'GSTIN of supplier',
@@ -123,6 +123,7 @@ class GetPurchase:
             'State/Union Territory Tax':"SGST"
                 
         }
+        self.metadata = metadata
 
         self.cols_mapping_cdnr = {
             'Type of Inward Supply':'Type of Inward Supply',
@@ -190,6 +191,7 @@ class GetPurchase:
             elif sheet == 'IMPG':
                 df['Type of Inward Supply'] = 'Import of Goods/Supplies from SEZ to DTA'
                 df['Type of Document'] = 'Invoice/Bill of Entry'
+                df['GSTIN of supplier'] = self.metadata['gstin']
                 
             print(sheet)
             sheet_dataframes.append(df)
