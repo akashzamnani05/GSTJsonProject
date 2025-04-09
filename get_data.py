@@ -47,7 +47,7 @@ class GetSales:
                     temp_df = self.condense_dataframe(temp_df)
                     
                 # now here we have b2cs and b2b , so we ll check if it is b2cs we ll sum the data and add
-            temp_df['Date'] = pd.to_datetime(temp_df['Date']).dt.strftime('%d-%m-%Y')
+            temp_df['Date'] = pd.to_datetime(temp_df['Date'],format='mixed').dt.strftime('%d-%m-%Y')
             print(temp_df.shape)
             new_dfs.append(temp_df)
 
