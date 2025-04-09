@@ -1,0 +1,6 @@
+pandas 
+streamlit 
+numpy 
+ipykernel
+openpyxl
+pyxlsb
