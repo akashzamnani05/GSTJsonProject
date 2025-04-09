@@ -25,7 +25,6 @@ class GetJson:
         #     'Dateo':'oidt',
 
         # }
-
         self.new_columns = ["istype","stin","idtype","inum","idt","portcd","val","iamt","camt","samt","ostype","odtype","oinum","oidt","oval","oiamt","ocamt","osamt"]
         self.final_df = final_df
         self.metadata = metadata
